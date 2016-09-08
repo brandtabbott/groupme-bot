@@ -1,0 +1,27 @@
+{
+  "name": "groupme-bot",
+  "description": "A modular GroupMe bot",
+  "version": "0.0.1",
+  "main": "groupme-bot.js",
+  "scripts": {
+    "start": "env.sh; node groupme-bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandtabbott/groupme-bot"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/brandtabbott/groupme-bot/issues"
+  },
+  "author": "Brandt Abbott <brandt.abbott@gmail.com",
+  "homepage": "https://github.com/brandtabbott/groupme-bot",
+  "license": "MIT",
+  "devDependencies": {
+    "destiny-client": "git://github.com/brandtabbott/destiny.git#develop",   
+    "fancy-groupme-bot": "0.1.3",
+    "giphy-wrapper": "0.0.1",
+    "underscore": "1.5.2",
+    "node-xbox": "0.1.0"
+  }
+}
