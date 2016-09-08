@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "main": "groupme-bot.js",
   "scripts": {
-    "start": "env.sh; node groupme-bot.js"
+    "start": ". ./env-prod.sh; node groupme-bot.js",
+    "dev": ". ./env-dev.sh; node groupme-bot.js"
   },
   "repository": {
     "type": "git",
