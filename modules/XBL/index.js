@@ -15,7 +15,6 @@ xbl.do = function(args, bot){
     return;
   
   var gtag = args.join(" ");
-  var self = this;
 
   xbox.profile.xuid(gtag, function(err, xuid){
     if(err){
@@ -25,7 +24,7 @@ xbl.do = function(args, bot){
 
     xbox.profile.presence(xuid, function(err, presence){
       if(presence){
-        console.log(presence);
+        //console.log(presence);
         var p = JSON.parse(presence);                
         var playing = xbl._getPlaying(p);
 
@@ -44,17 +43,16 @@ xbl.do = function(args, bot){
 };
 
 xbl.status = function(args, bot){  
-  //["PeepshowJanitor", "TDG BullDog", "Boog1eMan X", "CataclysmicFate", "ColtCowboy", "Ghost TDG", "GiantLakeOfire", "Jawgoosh", "JohnnyBoyFloyd", "KLimax47", "Kuppy JR", "Mac79PR", "Mits TDG", "ProtoCull", "So Fuzzy", "Tat2XL", "TATTERR", "TDG Vash", "Wicked Oso TDG"];
   var group_members = GROUP_GAMERTAGS.split(',');  
   var group_playing = '';
   var numberCompleted = 0;
-  var self = this;
 
   xbox.profile.friends(OWNER_XUID, function(err, f){
     var friends = JSON.parse(f);
 
     friends.forEach(function(friend){
       if(group_members.indexOf(friend.Gamertag) != -1){        
+        console.log('Processing '+friend.Gamertag); 
         var xuid = friend.id;
 
         //Get the user's presence
@@ -65,10 +63,12 @@ xbl.status = function(args, bot){
           var member_playing = xbl._getPlaying(p);
 
           //Add Online user's status
-          if(member_playing != '')
+          if(member_playing != ''){
             group_playing += friend.Gamertag+' - Playing: '+member_playing+'\n';
+          }
 
           numberCompleted++;
+          console.log('numberCompleted: '+numberCompleted+' group_members.length: '+group_members.length);
           if(numberCompleted == group_members.length)
             bot.message('XBL Memebers Online:\n'+group_playing);                                                                                    
         }); 
