@@ -87,15 +87,16 @@ xbl._getPlaying = function(p){
       for(var device = 0; device < p.devices.length; device++){
         if('XboxOne' == p.devices[device].type){
           //Titles
-          if(typeof p.devices[device].titles != 'undefined' && p.devices[device].titles.length > 0)
-          for(var title = 0; title < p.devices[device].titles.length; title++){
-            //What's in the full window
-            if('Full' == p.devices[device].titles[title].placement){
-              member_playing = p.devices[device].titles[title].name;
-            }
-            //Rich presence if available
-            if(typeof p.devices[device].titles[title].activity != 'undefined'){
-              member_playing += ' - '+p.devices[device].titles[title].activity.richPresence;
+          if(typeof p.devices[device].titles != 'undefined' && p.devices[device].titles.length > 0){
+            for(var title = 0; title < p.devices[device].titles.length; title++){
+              //What's in the full window
+              if('Full' == p.devices[device].titles[title].placement){
+                member_playing = p.devices[device].titles[title].name;
+              }
+              //Rich presence if available
+              if(typeof p.devices[device].titles[title].activity != 'undefined'){
+                member_playing += ' - '+p.devices[device].titles[title].activity.richPresence;
+              }
             }
           }
         }
