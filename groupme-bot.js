@@ -1,3 +1,9 @@
+["log", "warn", "error"].forEach(function(method) {
+  var oldMethod = console[method].bind(console);
+  console[method] = function() {
+    oldMethod.apply( console, [(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().slice(0,-1)].concat(arguments));
+  };
+});
 var TOKEN = process.env['GROUPME_API_KEY'],
   GROUP = process.env['GROUPME_GROUP_ID'],
   NAME = process.env['GROUPME_BOT_NAME'] || '',
