@@ -1,6 +1,7 @@
 var XBOX_API_KEY = process.env['XBOX_API_KEY'];
 var GROUP_GAMERTAGS = process.env['GROUP_GAMERTAGS'];
 var OWNER_XUID = process.env['OWNER_XUID'];
+var OWNER_GAMERTAG = process.env['OWNER_GAMERTAG'];
 
 var xbox = require('node-xbox')(XBOX_API_KEY);
 
@@ -50,31 +51,54 @@ xbl.status = function(args, bot){
   xbox.profile.friends(OWNER_XUID, function(err, f){
     var friends = JSON.parse(f);
 
-    friends.forEach(function(friend){
-      if(group_members.indexOf(friend.Gamertag) != -1){        
-        console.log('Processing '+friend.Gamertag); 
-        var xuid = friend.id;
+    group_members.forEach(function(member){
+      var friend = null;
+      
+      //Owner does show up in his/her own friends list
+      if(member===OWNER_GAMERTAG)
+        friend = {Gamertag:OWNER_GAMERTAG,id:OWNER_XUID};
+      else
+        friend = xbl._findFriend(member, friends);
 
-        //Get the user's presence
-        xbox.profile.presence(xuid, function(err, presence){
-          console.log(presence);
-
-          var p = JSON.parse(presence);
-          var member_playing = xbl._getPlaying(p);
-
-          //Add Online user's status
-          if(member_playing != ''){
-            group_playing += friend.Gamertag+' - Playing: '+member_playing+'\n';
-          }
-
-          numberCompleted++;
-          console.log('numberCompleted: '+numberCompleted+' group_members.length: '+group_members.length);
-          if(numberCompleted == group_members.length)
-            bot.message('XBL Memebers Online:\n'+group_playing);                                                                                    
-        }); 
+      if(friend == null){
+        numberCompleted++;      
+        return;    
       }
+      
+      console.log('Processing '+friend.Gamertag); 
+      var xuid = friend.id;
+
+      //Get the user's presence
+      xbox.profile.presence(xuid, function(err, presence){
+        console.log(presence);
+
+        var p = JSON.parse(presence);
+        var member_playing = xbl._getPlaying(p);
+
+        //Add Online user's status
+        if(member_playing != ''){
+          group_playing += friend.Gamertag+' - Playing: '+member_playing+'\n';
+        }
+
+        numberCompleted++;
+        console.log('numberCompleted: '+numberCompleted+' group_members.length: '+group_members.length);
+        if(numberCompleted == group_members.length)
+          bot.message('XBL Memebers Online:\n'+group_playing);                                                                                              
+      });       
     });
   });
+};
+
+xbl._findFriend = function(gamertag,friends){
+  var foundFriend = null;
+
+  friends.forEach(function(friend){
+    if(gamertag.indexOf(friend.Gamertag) != -1){
+      foundFriend = friend;
+    }
+  }); 
+
+  return foundFriend;   
 };
 
 xbl._getPlaying = function(p){
