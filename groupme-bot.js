@@ -1,9 +1,3 @@
-["log", "warn", "error"].forEach(function(method) {
-  var oldMethod = console[method].bind(console);
-  console[method] = function() {
-    oldMethod.apply( console, [(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().slice(0,-1)].concat(arguments));
-  };
-});
 var TOKEN = process.env['GROUPME_API_KEY'],
   GROUP = process.env['GROUPME_GROUP_ID'],
   NAME = process.env['GROUPME_BOT_NAME'] || '',
@@ -13,8 +7,23 @@ var TOKEN = process.env['GROUPME_API_KEY'],
 
 var util = require('util');
 var fancy = require('fancy-groupme-bot');
-var groupMeBot = fancy(CONFIG);
+var color = require('tinycolor');
 
+//Don't stop this server if an exception goes uncaught
+process.on('uncaughtException', function (err) {
+  console.error((err.stack+'').red.bold);
+  console.error('Node trying not to exit...'.red.bold);
+});     
+
+//Override console
+["log", "warn", "error"].forEach(function(method) {
+  var oldMethod = console[method].bind(console);
+  console[method] = function() {
+    oldMethod.apply( console, [(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().slice(0,-1)].concat(arguments));
+  };
+});
+
+var groupMeBot = fancy(CONFIG);
 BOT_NAME = NAME;
 
 modules = [

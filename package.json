@@ -23,6 +23,7 @@
     "fancy-groupme-bot": "0.1.3",
     "giphy-wrapper": "0.0.1",
     "underscore": "1.5.2",
-    "node-xbox": "0.1.0"
+    "node-xbox": "0.1.0",
+    "tinycolor": "0.0.1"    
   }
 }
