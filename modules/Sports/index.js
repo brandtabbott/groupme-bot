@@ -48,7 +48,7 @@ sports._parse = function(responseString){
   var parsedSearch = responseString.split('&');
   var finalText = '';
   parsedSearch.forEach(function(param){
-    var text = decodeURI(param);
+    var text = unescape(param);
     if(text.indexOf('left')!=-1){
       text = text.replace('^', '');
       text = text.replace(/.*left.*\=/, '');
