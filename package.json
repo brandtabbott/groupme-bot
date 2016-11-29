@@ -24,6 +24,8 @@
     "giphy-wrapper": "0.0.1",
     "underscore": "1.5.2",
     "node-xbox": "0.1.0",
-    "tinycolor": "0.0.1"    
+    "tinycolor": "0.0.1",
+    "nightmare": "2.8.1",
+    "cheerio": "0.22.0"
   }
 }
