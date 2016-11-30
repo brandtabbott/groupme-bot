@@ -34,7 +34,8 @@ modules = [
   imgurModule = require('./modules/Imgur'),
   plusPlusModule = require('./modules/PlusPlus'),
   xblModule = require('./modules/XBL'),
-  sportsModule = require('./modules/Sports')
+  sportsModule = require('./modules/Sports'),
+  melonsModule = require('./modules/Melons')
 ],
 
 groupMeBot.on('botRegistered', function(b) {
