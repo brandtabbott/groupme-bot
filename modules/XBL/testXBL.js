@@ -4,3 +4,4 @@ console.message = console.log;
 
 xblModule.do(['Major Nelson'], console);
 xblModule.status(null, console);
+xblModule.status(null, console);
