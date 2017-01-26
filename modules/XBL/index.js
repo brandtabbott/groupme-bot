@@ -17,15 +17,20 @@ xbl.do = function(args, bot){
 xbl.status = function(args, bot){  
   var group_members = GROUP_GAMERTAGS.split(',');  
   var group_playing = '';
-  var nightmare = Nightmare({ show: false });
+  var nightmare = Nightmare({ 
+    show: true,
+    switches: {      
+      'ignore-certificate-errors': true
+    } 
+  });
   
   nightmare
-    .goto('https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1480444953&rver=6.5.6509.0&wp=MBI_SSL&wreply=https:%2F%2Faccount.xbox.com:443%2Fpassport%2FsetCookies.ashx%3Frru%3Dhttps%253a%252f%252faccount.xbox.com%252fen-US%252fAccount%252fSignin%253freturnUrl%253dhttp%25253a%25252f%25252fwww.xbox.com%25252fen-US%25252f%25253fxr%25253dmebarnav%2526pcexp%253dtrue%2526uictx%253dme&lc=1033&id=292543&cbcxt=0')
-    .insert('form[action*="/post"] [name=loginfmt]', XBOX_LOGIN)
-    .click('form[action*="/post"] [value="Next"]')  
-    .wait(1000)
-    .insert('form[action*="/post"] [name=passwd]', XBOX_PASSWORD)
-    .click('form[action*="/post"] [value="Sign in"]')  
+    .goto('https://login.live.com')
+    .insert('input[name=loginfmt]', XBOX_LOGIN)
+    .click('input[value="Next"]')  
+    .wait(5000)
+    .insert('input[name=passwd]', XBOX_PASSWORD)
+    .click('input[value="Sign in"]')  
     .wait(2000)
     .goto('https://account.xbox.com/en-US/Friends')
     .wait(gamerListSelector)
