@@ -3,7 +3,7 @@ var XBOX_LOGIN = process.env['XBOX_LOGIN'];
 var XBOX_PASSWORD = process.env['XBOX_PASSWORD'];
 var Nightmare = require('nightmare');
 var cheerio = require("cheerio");
-var gamerListSelector = '[id=friendsContent]';
+var gamerListSelector = '[class=friendList]';
 
 xbl = {
   name: 'xbl',
@@ -43,8 +43,8 @@ xbl.status = function(args, bot){
       var $ = cheerio.load(text);
       $("ul > li").each(function(){
         var li = $(this);
-        var gamerTag = li.attr("data-gamertag");
-        var info = li.find(".primaryInfo").text() || 'Home';
+        var gamerTag = li.find(".xboxprofileinfo").find('span.name').text();
+        var info = li.find(".metadatatext").text() || 'Home';
         if(!info.startsWith('Offline') && !info.startsWith('Last seen') && group_members.indexOf(gamerTag) != -1)
           group_playing = group_playing + gamerTag+': '+info+'\n';
       });
