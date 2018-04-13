@@ -4,13 +4,14 @@ var TUMBLER_API_KEY = process.env['TUMBLER_API_KEY'],
 
 melons = {
   name: 'melons',
-  helpText: '/melons [fresh|variety|peaches|beach|yoga|fit|inked] - You guys like em',
+  helpText: '/melons [fresh|variety|peaches|apples|beach|yoga|fit|inked] - You guys like em',
   defaultFunction: function(args, bot) {return melons.getFeed(args, bot)}
 };
 
 melons.getFeed = function(args, bot){
   var feed = '';
   var feeds = {
+    apples: 'sexyhotbackdimples', 
     beach: 'sexyhotbeachandpoolbabes',
     fit:    'sexyhottonedbabes',
     fresh:  'sexyhotracks',
@@ -24,7 +25,7 @@ melons.getFeed = function(args, bot){
   if(args==null || args.length < 1)
     feed = feeds['melons'];
   else
-    feed = 'fresh variety peaches beach yoga fit inked'.indexOf(args[0].trim()) == -1 ? feeds['melons'] : feeds[args[0].trim()];
+    feed = 'fresh variety peaches apples beach yoga fit inked'.indexOf(args[0].trim()) == -1 ? feeds['melons'] : feeds[args[0].trim()];
 
   melons._go(feed,bot);
 };
